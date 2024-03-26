@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login for Chat APP</title>
+    <link rel="stylesheet" th:href="@{/css/Login.css}">
+</head>
+
+<body>
+    <div class="ContainerG">
+        <div class="Login">
+            <form th:action="@{/login}" method="POST">
+                <div class="    Imagen">
+                    <img th:src="@{/img/login.png}" alt="">
+                </div>
+                <div class="inputs">
+                    <label for="">Usuario:</label>
+                    <input type="text" class="In" name="username" id="username">
+                    <label for="">Contraseña:</label>
+                    <input type="password" class="In" name="password" id="password">
+
+                </div>
+                <div class="sectionbutton">
+                    <input type="submit" value="Entrar" class="boton" name="submit">
+                </div>
+                
+            </form>
+            <br><br>
+               <a th:href="@{/}">Home</a>
+            
+
+
+        </div>
+
+
+</body>
+
+</html>

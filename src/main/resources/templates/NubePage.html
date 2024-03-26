@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<link rel="stylesheet" href="../css/NubePage.css">
+</head>
+
+<body>
+    <h1>Nube Privada FLORESCLOUD</h1>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="logout" name="logout" id="logout" class="btnSelect">
+    </form>
+    
+    <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+        <input type="file" name="file" id="uploadbtn" multiple="true">
+        <label for="uploadbtn" class="btnSelect">Seleccionar Archivo</label>
+        <br>
+        <br>
+        <br>
+        <button type="submit" >Enviar</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Archivo</th>
+                <th>Acciones</th>
+                <th>Multimedia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="file : ${files}">
+                <td th:text="${file}"></td>
+                <td>
+                    <a th:href="@{'/download/' + ${file}}">Descargar</a>
+                    <a th:href="@{'/delete/' + ${file}}">Eliminar</a>
+                </td>
+                <td>
+                    <img th:if="${#strings.endsWith(file, '.jpg') or #strings.endsWith(file, '.jpeg') or #strings.endsWith(file, '.png')}" 
+                    th:src="@{'/download/' + ${file}}" alt="Imagen" style="max-width: 200px; max-height: 200px;">
+                    <video th:if="${#strings.endsWith(file, '.mp4') or #strings.endsWith(file, '.avi') or #strings.endsWith(file, '.mkv')}" 
+                    width="320" height="240" controls>
+                 <source th:src="@{'/download/' + ${file}}" type="video/mp4">
+                 Tu navegador no soporta el elemento de video.
+             </video>
+            </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <img src="" alt="">
+</body>
+
+</html>
