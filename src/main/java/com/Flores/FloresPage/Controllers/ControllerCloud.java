@@ -32,18 +32,17 @@ public class ControllerCloud {
         model.addAttribute("files", fileNames);
         return "NubePage";
     }
-        @PostMapping("/upload")
-public  String uploadFile(@RequestParam("file") MultipartFile[] files) {
-    try {
-        for (MultipartFile file : files) {
-            uploadFileService.saveFile(file);
+    @PostMapping("/upload")
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            uploadFileService.saveFile(file, file.getOriginalFilename());
+            model.addAttribute("message", "Archivo subido correctamente");
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Error al subir el archivo: " + e.getMessage());
         }
         return "redirect:/nube";
-    } catch (IOException e) {
-        e.printStackTrace();
-        return "redirect:/nube";
     }
-}
 
 @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws MalformedURLException, FileNotFoundException {

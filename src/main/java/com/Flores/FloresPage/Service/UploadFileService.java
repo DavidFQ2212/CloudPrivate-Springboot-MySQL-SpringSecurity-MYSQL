@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,20 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadFileService {
     private String uploadFolder = "./files/";
 
-        public void saveFile(MultipartFile file) throws IOException {
-            if (!file.isEmpty()) {
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadFolder).resolve(file.getOriginalFilename());
-                Files.write(path, bytes);
-            }
+    public void saveFile(MultipartFile file, String filename) throws IOException {
+        Path directoryPath = Paths.get(uploadFolder);
+
+        // Verifica si la carpeta existe, si no la crea
+        if (Files.notExists(directoryPath)) {
+            Files.createDirectories(directoryPath);
         }
+
+        Path filePath = directoryPath.resolve(filename);
+
+        // Guarda el archivo en el path especificado
+        Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE);
+    }
+
 
 
     public List<String> getAllFileNames() {
